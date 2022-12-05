@@ -1,0 +1,19 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+spring:
+  application:
+    name: USR-SERVICE
+#  security:
+#    user:
+#      name: oigadoi
+#      password: 20001911
+
+server:
+  port: 8082

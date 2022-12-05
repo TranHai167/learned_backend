@@ -1,0 +1,30 @@
+server:
+  port: 9090
+
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USR-SERVICE
+          uri: http://localhost:8082
+          predicates:
+            - Path=/users/**
+
+        - id: LIB-SERVICE
+          uri: http://localhost:8080
+          predicates:
+            - Path=/lib/**
+
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost

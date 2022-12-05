@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src =
+                    "https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+    </script>
+</head>
+<body>
+    <h2>This is all books in Dreamer</h2>
+    <div>
+        <table border="1">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Details</th>
+                <th>Quantity</th>
+                <th>Borrow</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each ="book:${books}">
+                <td th:utext="${book.getTitle()}">...</td>
+                <td th:utext="${book.getAuthor()}">...</td>
+                <td><input type="button" value="Details" th:name='${book.getTitle()}' id="details"></td>
+                <td th:utext="${book.getCount()}">...</td>
+                <td><input type="button" value="Borrow"  th:name='${book.getTitle()}' id="borrow"></td>
+                <td><input type="button" value="Delete"  th:name='${book.getTitle()}' id="delet"></td>
+            </tr>
+        </table>
+
+        <button><a href="/lib/home">Confirm</a></button>
+    </div>
+    <script>
+        $("input").click(function(e){
+            console.log(this);
+            var title = e.target.name;
+            var action = e.target.id;
+            console.log(title, action);
+            var bookObj = JSON.stringify({name:title, act:action});
+            $.ajax({
+                url: 'http://localhost:9090/lib/delete',
+                method: 'DELETE',
+                data: bookObj,
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    alert(action+'d successfully');
+                },
+                error: function (error) {
+                    alert(error);
+                }
+            })
+
+            setTimeout(() => {
+                document.location.reload();
+            }, 500);
+        });
+
+    </script>
+    <div>
+        <p id="wait"></p>
+    </div>
+</body>
+
+</html>
